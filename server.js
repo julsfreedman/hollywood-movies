@@ -2,11 +2,14 @@
 // Setting Up Our server.js
 //// Import Our Dependencies
 /////////////////////////////////////////////
-require("dotenv").config(); // Load ENV Variables
+//require("dotenv").config(); // Load ENV Variables
+//after refactoring, all of our connection information is in models/connection.js
+// and that is the information that is in .env
 const express = require("express"); // import express
 const morgan = require("morgan"); //import morgan
 const methodOverride = require("method-override");
-const mongoose = require("mongoose");
+//const mongoose = require("mongoose");
+const Movie = require("./models/movie");
 const path = require("path"); // built in node module we use to resolve paths more on this when we use it
 
 
@@ -15,43 +18,43 @@ const path = require("path"); // built in node module we use to resolve paths mo
 //// Database Connection
 /////////////////////////////////////////////
 // Setup inputs for our connect function
-const DATABASE_URL = process.env.DATABASE_URL;
-const CONFIG = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-};
+// const DATABASE_URL = process.env.DATABASE_URL;
+// const CONFIG = {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+// };
 
 // Establish Connection
-mongoose.connect(DATABASE_URL, CONFIG);
+//mongoose.connect(DATABASE_URL, CONFIG);
 
 // Events for when connection opens/disconnects/errors
-mongoose.connection
-    .on("open", () => console.log("Connected to Mongoose"))
-    .on("close", () => console.log("Disconnected from Mongoose"))
-    .on("error", (error) => console.log(error));
+//mongoose.connection
+// .on("open", () => console.log("Connected to Mongoose"))
+// .on("close", () => console.log("Disconnected from Mongoose"))
+// .on("error", (error) => console.log(error));
 
 
 ////////////////////////////////////////////////
 // Our Models
 ////////////////////////////////////////////////
 // pull schema and model from mongoose using object destructuring
-const { Schema, model } = mongoose;
+// const { Schema, model } = mongoose;
 
-// make movie schema
-const movieSchema = new Schema({
-    title: { type: String, required: true },
-    releaseDate: String,
-    length: Number,
-    genre: String,
-    poster: { type: String, required: true },
-    director: { type: String, required: true },
-    rating: String,
-    watchAgain: Boolean,
-    cast: [{ type: String }]
-});
+// // make movie schema
+// const movieSchema = new Schema({
+//     title: { type: String, required: true },
+//     releaseDate: String,
+//     length: Number,
+//     genre: String,
+//     poster: { type: String, required: true },
+//     director: { type: String, required: true },
+//     rating: String,
+//     watchAgain: Boolean,
+//     cast: [{ type: String }]
+// });
 
-// make movie model
-const Movie = model("Movie", movieSchema);
+// // make movie model
+// const Movie = model("Movie", movieSchema);
 
 /////////////////////////////////////////////////
 // Create our Express Application Object Bind Liquid Templating Engine
